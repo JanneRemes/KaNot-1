@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win32ikkuna", "win32ikkuna.vcxproj", "{ED632E03-3F7F-45B7-8436-967794C39C1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B2CBA074-A0B3-4EDC-BE0B-8729B57E06D4}"
+	ProjectSection(SolutionItems) = preProject
+		win32ikkunavisiooo.vsd = win32ikkunavisiooo.vsd
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED632E03-3F7F-45B7-8436-967794C39C1C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ED632E03-3F7F-45B7-8436-967794C39C1C}.Debug|Win32.Build.0 = Debug|Win32
+		{ED632E03-3F7F-45B7-8436-967794C39C1C}.Release|Win32.ActiveCfg = Release|Win32
+		{ED632E03-3F7F-45B7-8436-967794C39C1C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

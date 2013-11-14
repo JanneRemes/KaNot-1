@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="jni\Engine.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\GameObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\Mathlib.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\Quad.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\Shader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\Texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="jni\Engine.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="FileReader.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\GameObject.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\Mathlib.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\Shader.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\Quad.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\Texture.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32toAndroid.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{fc73b014-00c4-4819-8361-c975c1db6ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{13eb42da-6c32-4638-b59b-0574a8f3f320}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
