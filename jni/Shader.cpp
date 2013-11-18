@@ -65,28 +65,31 @@ Shader::Shader()
 
 	//compile shader codes
 	PS = loadShader(GL_FRAGMENT_SHADER,gFragmentShader);
-	checkGlError("Shader");
+	checkGlError("loadShader,gFragmentShader");
 	VS = loadShader(GL_VERTEX_SHADER,gVertexShader);
-	checkGlError("Shader2");
+	checkGlError("loadShader,gVertexShader");
 
 	//make the shader program
 	Program = glCreateProgram();
-	checkGlError("Shader3");
+	checkGlError("glCreateProgram");
 
 	//attach shaders to the program
 	glAttachShader(Program, VS);
-	checkGlError("Shader4");
+	checkGlError("glAttachShader,VS");
 	glAttachShader(Program, PS);
+	checkGlError("glAttachShader,PS");
 	//finalize shader
 	glLinkProgram(Program);
-
+	checkGlError("glLinkProgram");
 	glUseProgram(Program);
+	checkGlError("glUseProgram");
 
 	//bind position string to attrib at loc 0
 	glBindAttribLocation(Program,0,"vPosition");
+	checkGlError("glBindAttribLocation,vPosition");
 	//bind color string to attriv at loc 1
 	glBindAttribLocation(Program,1,"vUv");
-	checkGlError("Shader5");
+	checkGlError("glBindAttribLocation,vUV");
 
 	Position = glGetAttribLocation(Program,"vPosition");
 	Uv = glGetAttribLocation(Program,"vUv");
