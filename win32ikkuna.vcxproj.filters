@@ -31,6 +31,8 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="jni\Camera.cpp" />
+    <ClCompile Include="jni\Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jni\Engine.h">
@@ -63,6 +65,8 @@
     <ClInclude Include="Window.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="jni\Camera.h" />
+    <ClInclude Include="jni\Debug.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Include">

@@ -23,6 +23,7 @@
 #include <math.h>
 #include <Engine.h>
 #include <FileReader.h>
+#include <Debug.h>
 
 
 static void printGLString(const char *name, GLenum s) {

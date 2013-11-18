@@ -1,19 +1,27 @@
 #pragma once
 #ifndef QUAD
 #define QUAD
+
 #include <Win32toAndroid.h>
-class Shader;
+#include <Shader.h>
+#include <Debug.h>
+
 class Quad
 {
 public:
-	Quad(int,int,int,int);
-	void move(int,int);
-	void resize (int,int);
-	void rotate(float);
+	Quad(int,int,int,int,int,int);
+	void setPosition(int,int,int);
+	void resize (int,int,int);
+	void rotate(float,int,int,int);
+	void rotate(float,glm::vec3);
 	void Draw(float);
 	void setTexture(GLuint);
 	void setShader(Shader*);
 	static float*Projection;
+
+	glm::mat4 Rotate;
+	glm::mat4 Scaling;
+	glm::mat4 Translate;
 
 	~Quad(void);
 
@@ -22,7 +30,8 @@ private:
 	void GenBuffer();
 	float* Scale;
 	float* Translation;
-	int x,y,w,h;
+	int /*x,y,*/w,h,d/*,z*/;
+	glm::vec3 m_pos;
 	float* Data;
 	float* Rotation;
 	GLuint texid,VBO;

@@ -1,30 +1,33 @@
 #include <Quad.h>
-#include <Shader.h>
+
 #include <cmath>
 #include <stdlib.h>
-
 float* Quad::Projection = NULL;
 
-Quad::Quad(int H,int W,int X,int Y)
+Quad::Quad(int H,int W,int D, int X,int Y,int Z)
 {
+	checkGlError("Quad tehty");
 	w=W;
 	h=H;
-	x=X;
-	y=Y;
-
+/*	x=X;
+	y=Y;*/
+	d=D;
+//	z=Z;
+	//setPosition(X,Y,Z);
 	Translation = (float*)calloc(16,sizeof(float));
 	Rotation = (float*)calloc(16,sizeof(float));
 	Scale = (float*)calloc(16,sizeof(float));
 	glGenBuffers(1,&VBO);
 	GenBuffer();
-	move(x,y);
-	resize(w,h);
-	rotate(0);
+	setPosition(X,Y,Z);
+	resize(w,h,d);
+	Rotate = glm::mat4(1.0f);
 
 }
 
 void Quad::GenBuffer()
 {
+	checkGlError("Quad Buffer");
 	float* Data = (float*)malloc(30*sizeof(float));
 
 	Data[0] = -0.5f; 
@@ -78,43 +81,61 @@ void Quad::GenBuffer()
 
 	glBufferData(GL_ARRAY_BUFFER,sizeof(Data)*30,Data,GL_DYNAMIC_DRAW);
 	free(Data);
+	checkGlError("Quad Buffer end");
 }
 
-void Quad::move(int X,int Y)
+void Quad::setPosition(int X,int Y, int Z)
 {
-	Translation[0] = 1;
-	Translation[3] = X;
-	Translation[5] = 1;
-	Translation[7] = Y;
-	Translation[10] = 1;
-	Translation[15] = 1;
-	x = X; y = Y;
+	m_pos = glm::vec3(X,Y,Z);
+	//Translation[0] = 1;
+	//Translation[3] = X;
+	//Translation[5] = 1;
+	//Translation[7] = Y;
+	//Translation[10] = 1;
+	//Translation[15] = 1;
+	//glm::vec3 trans(X,Y,Z);
+	//Translate = glm::translate(trans);
+
+	//x = X; y = Y; z = Z;
+
 }
 
-void Quad::resize(int W,int H)
+void Quad::resize(int W,int H, int D)
 {
+
 	w = W;
 	h = H;
-	
-	Scale[0] = w;
-	Scale[5] = h;
-	Scale[10] = 1;
-	Scale[15] = 1;
+	d = D;
 
+	//Scale[0] = w;
+	//Scale[5] = h;
+	//Scale[10] = 1;
+	//Scale[15] = 1;
+
+	Scaling = glm::scale(w,h,1);
 }
 
-void Quad::rotate(float r)
+void Quad::rotate(float r, int x, int y ,int z)
 {
-	Rotation[0] = std::cos(-r);
-	Rotation[1] = -std::sin(-r);
-	Rotation[4] = std::sin(-r);
-	Rotation[5] = std::cos(-r);
-	Rotation[10] = 1;
-	Rotation[15] = 1;
+	//Rotation[0] = std::cos(-r);
+	//Rotation[1] = -std::sin(-r);
+	//Rotation[4] = std::sin(-r);
+	//Rotation[5] = std::cos(-r);
+	//Rotation[10] = 1;
+	//Rotation[15] = 1;
+
+	glm::vec3 RotationAxis(x,y,z);
+	Rotate = glm::rotate(r,RotationAxis);
+}
+
+void Quad::rotate(float r, glm::vec3 v)
+{
+	Rotate = glm::rotate(r,v);
 }
 
 void Quad::Draw(float z)
 {
+	checkGlError("Draw alkoi");
 	glEnableVertexAttribArray(shader->Position);
 	glEnableVertexAttribArray(shader->Uv);
 	glUseProgram(shader->Program);
@@ -129,14 +150,40 @@ void Quad::Draw(float z)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 
-	glUniform1i(shader->loc, 0); 
+	glUniform1i(shader->loc, 0);
+	checkGlError("Uniform1i");
+
 
     glVertexAttribPointer(shader->Position,3,GL_FLOAT,GL_FALSE,5*sizeof(GL_FLOAT),0); 
 	glVertexAttribPointer(shader->Uv,2,GL_FLOAT,GL_FALSE,5*sizeof(GL_FLOAT),(void*)(sizeof(GL_FLOAT)*3)); 
-	glUniformMatrix4fv(shader->loc2,1,GL_FALSE,Projection);
-	glUniformMatrix4fv(shader->loc3,1,GL_FALSE,Translation);
-	glUniformMatrix4fv(shader->loc4,1,GL_FALSE,Rotation);
-	glUniformMatrix4fv(shader->loc5,1,GL_FALSE,Scale);
+	//glUniformMatrix4fv(shader->loc2,1,GL_FALSE,Projection);
+	//glUniformMatrix4fv(shader->loc3,1,GL_FALSE,Translation);
+	//glUniformMatrix4fv(shader->loc4,1,GL_FALSE,Rotation);
+	//glUniformMatrix4fv(shader->loc5,1,GL_FALSE,Scale);
+	//shader->setUniformMatrix("Rotation", Rotate);
+	//checkGlError("Rotation");
+	//shader->setUniformMatrix("Scale", Scaling);
+	//checkGlError("Rotation");
+
+	static float angle = 0.0f;
+	angle += 0.01f;
+
+	glm::mat4 model = glm::translate(m_pos) * glm::rotate( angle*100.0f, 0.0f,1.0f,1.0f );
+
+	glm::mat4 view = glm::lookAt(
+		glm::vec3(0,0,-2), // Camera is at (4,3,3), in World Space
+		glm::vec3(0,0,0), // and looks at the origin
+		glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+		);
+	
+	glm::mat4 proj = glm::perspectiveFov(45.0f,1280.0f, 720.0f, 0.001f,100.0f);
+
+
+
+	glm::mat4 modelViewProjection = proj * view * model;
+
+	shader->setUniformMatrix("modelViewProj", modelViewProjection);
+	checkGlError("modelViewProj");
 	glBindBuffer(GL_ARRAY_BUFFER,VBO); 
     glDrawArrays(GL_TRIANGLES,0,6);
 	glDisableVertexAttribArray(shader->Position);

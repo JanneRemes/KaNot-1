@@ -4,13 +4,14 @@
 
 #include <Win32toAndroid.h>
 #include <Texture.h>
+#include <Camera.h>
+#include <Shader.h>
 //#include <OpenGL.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 //#define WINDOWS_FRAMEWORK
 
-class Shader;
 class Quad;
 
 class Engine
@@ -47,6 +48,8 @@ private:
 	int positionPhase;
 	float sine;
 
+	Camera* camera;
+	Shader* shader;
 	//GLuint Texture1;
 	//unsigned int num_vertices;
 };

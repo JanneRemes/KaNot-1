@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileReader.cpp" />
+    <ClCompile Include="jni\Camera.cpp" />
+    <ClCompile Include="jni\Debug.cpp" />
     <ClCompile Include="jni\Engine.cpp" />
     <ClCompile Include="jni\GameObject.cpp" />
     <ClCompile Include="jni\Mathlib.cpp" />
@@ -24,6 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileReader.h" />
+    <ClInclude Include="jni\Camera.h" />
+    <ClInclude Include="jni\Debug.h" />
     <ClInclude Include="jni\Engine.h" />
     <ClInclude Include="jni\GameObject.h" />
     <ClInclude Include="jni\Mathlib.h" />
