@@ -31,15 +31,18 @@ Engine::Engine()
 	shader = new Shader();
 	camera = new Camera();
 
+	static float angle = 0.0f;
+	angle += 0.5f;
+
 	//Draw texture 1
 	Quad1 = new Quad(128,128,0,1,0,0);
-	Quad1->setPosition(-1,1,0);
+	Quad1->setPosition(-1,1,10);
 	Quad1->setShader(shader);
 	Quad1->setTexture(texture_octo->texture);
 
 	//Draw texture 2
 	Quad2 = new Quad(150,150,0,0,1,0);
-	Quad2->setPosition(-1,0,10);
+	Quad2->setPosition(-1,0,0);
 	Quad2->setShader(shader);
 	Quad2->setTexture(texture->texture);
 
@@ -72,7 +75,7 @@ void Engine::Update()
 	//Quad1->move(sin(rotation_ganon/15)*500, cos(rotation_ganon/15)*100);
 
 	rotation_ganon += 1;
-
+	Quad1->rotate(rotation_ganon,0,0,1);
 	//Quad3->resize(abs(sin(rotation_ganon/50))*320,abs(sin(rotation_ganon/50)*320));
 	//Quad3->rotate(rotation_ganon/100);
 }
@@ -160,7 +163,7 @@ void Engine::Draw()
 	//Important GL draw clear thing
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	//Quad draws goes here. Remember the draw order.
-	Quad2->Draw(90.0f);
+	Quad2->Draw(0.9f);
 	Quad1->Draw(0.8f);
 	Quad3->Draw(0.7f);
 

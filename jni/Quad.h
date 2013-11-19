@@ -5,6 +5,7 @@
 #include <Win32toAndroid.h>
 #include <Shader.h>
 #include <Debug.h>
+#include <objLoader.h>
 
 class Quad
 {
@@ -36,6 +37,9 @@ private:
 	float* Rotation;
 	GLuint texid,VBO;
 	Shader* shader;
+	objLoader objLoader;
+	float** _data;
+	int* _faces;
 };
 
 #endif

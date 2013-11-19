@@ -17,6 +17,7 @@
     <ClCompile Include="jni\Engine.cpp" />
     <ClCompile Include="jni\GameObject.cpp" />
     <ClCompile Include="jni\Mathlib.cpp" />
+    <ClCompile Include="jni\objLoader.cpp" />
     <ClCompile Include="jni\Quad.cpp" />
     <ClCompile Include="jni\Shader.cpp" />
     <ClCompile Include="jni\Texture.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="jni\Engine.h" />
     <ClInclude Include="jni\GameObject.h" />
     <ClInclude Include="jni\Mathlib.h" />
+    <ClInclude Include="jni\objLoader.h" />
     <ClInclude Include="jni\Quad.h" />
     <ClInclude Include="jni\Shader.h" />
     <ClInclude Include="jni\Texture.h" />

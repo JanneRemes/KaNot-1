@@ -31,8 +31,15 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="jni\Camera.cpp" />
-    <ClCompile Include="jni\Debug.cpp" />
+    <ClCompile Include="jni\Camera.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\Debug.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\objLoader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jni\Engine.h">
@@ -65,8 +72,15 @@
     <ClInclude Include="Window.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="jni\Camera.h" />
-    <ClInclude Include="jni\Debug.h" />
+    <ClInclude Include="jni\Camera.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\Debug.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\objLoader.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Include">

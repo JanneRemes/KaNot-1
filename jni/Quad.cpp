@@ -76,10 +76,13 @@ void Quad::GenBuffer()
 
 	Data[28] = 1; 
     Data[29] = 0; 
+//	objLoader.loadObj("assets/cube.obj",_data,_faces);
 
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 
 	glBufferData(GL_ARRAY_BUFFER,sizeof(Data)*30,Data,GL_DYNAMIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, _data * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+
 	free(Data);
 	checkGlError("Quad Buffer end");
 }
@@ -165,10 +168,11 @@ void Quad::Draw(float z)
 	//shader->setUniformMatrix("Scale", Scaling);
 	//checkGlError("Rotation");
 
-	static float angle = 0.0f;
-	angle += 0.01f;
+	//static float angle = 0.0f;
+	//angle += 0.01f;
 
-	glm::mat4 model = glm::translate(m_pos) * glm::rotate( angle*100.0f, 0.0f,1.0f,1.0f );
+	glm::mat4 model = glm::translate(m_pos) * Rotate;
+		//glm::rotate( angle*100.0f, 0.0f,1.0f,1.0f );
 
 	glm::mat4 view = glm::lookAt(
 		glm::vec3(0,0,-2), // Camera is at (4,3,3), in World Space
