@@ -10,7 +10,7 @@
 class Quad
 {
 public:
-	Quad(int,int,int,int,int,int);
+	Quad(int H,int W,int D, int X,int Y,int Z);
 	void setPosition(int,int,int);
 	void resize (int,int,int);
 	void rotate(float,int,int,int);

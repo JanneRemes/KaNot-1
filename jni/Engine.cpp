@@ -35,20 +35,17 @@ Engine::Engine()
 	angle += 0.5f;
 
 	//Draw texture 1
-	Quad1 = new Quad(128,128,0,1,0,0);
-	Quad1->setPosition(-1,1,10);
+	Quad1 = new Quad(128,128,0,100,100,0);
 	Quad1->setShader(shader);
 	Quad1->setTexture(texture_octo->texture);
 
 	//Draw texture 2
-	Quad2 = new Quad(150,150,0,0,1,0);
-	Quad2->setPosition(-1,0,0);
+	Quad2 = new Quad(150,150,0,100,100,0);
 	Quad2->setShader(shader);
 	Quad2->setTexture(texture->texture);
 
 	//Draw texture 3
-	Quad3 = new Quad(300,300,0,0,0,10);
-	Quad3->setPosition(1,0,30);
+	Quad3 = new Quad(300,300,0,0,0,0);
 	Quad3->setShader(shader);
 	Quad3->setTexture(texture_ganon->texture);
 
@@ -76,6 +73,9 @@ void Engine::Update()
 
 	rotation_ganon += 1;
 	Quad1->rotate(rotation_ganon,0,0,1);
+	//Quad1->resize(1,1,0);
+	//Quad2->resize(1,1,0);
+	//Quad3->resize(1,1,0);
 	//Quad3->resize(abs(sin(rotation_ganon/50))*320,abs(sin(rotation_ganon/50)*320));
 	//Quad3->rotate(rotation_ganon/100);
 }

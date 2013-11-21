@@ -76,12 +76,12 @@ void Quad::GenBuffer()
 
 	Data[28] = 1; 
     Data[29] = 0; 
-//	objLoader.loadObj("assets/cube.obj",_data,_faces);
+	//objLoader.loadObj("assets/cube.obj",_data,_faces);
 
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 
 	glBufferData(GL_ARRAY_BUFFER,sizeof(Data)*30,Data,GL_DYNAMIC_DRAW);
-	//glBufferData(GL_ARRAY_BUFFER, _data * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(_faces) * sizeof(glm::vec3), &_data[0], GL_STATIC_DRAW);
 
 	free(Data);
 	checkGlError("Quad Buffer end");
@@ -97,7 +97,7 @@ void Quad::setPosition(int X,int Y, int Z)
 	//Translation[10] = 1;
 	//Translation[15] = 1;
 	//glm::vec3 trans(X,Y,Z);
-	//Translate = glm::translate(trans);
+	Translate = glm::translate(m_pos);
 
 	//x = X; y = Y; z = Z;
 
@@ -115,18 +115,11 @@ void Quad::resize(int W,int H, int D)
 	//Scale[10] = 1;
 	//Scale[15] = 1;
 
-	Scaling = glm::scale(w,h,1);
+	Scaling = glm::scale(w,h,d);
 }
 
 void Quad::rotate(float r, int x, int y ,int z)
 {
-	//Rotation[0] = std::cos(-r);
-	//Rotation[1] = -std::sin(-r);
-	//Rotation[4] = std::sin(-r);
-	//Rotation[5] = std::cos(-r);
-	//Rotation[10] = 1;
-	//Rotation[15] = 1;
-
 	glm::vec3 RotationAxis(x,y,z);
 	Rotate = glm::rotate(r,RotationAxis);
 }
@@ -149,7 +142,6 @@ void Quad::Draw(float z)
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	Translation[11] = z;
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 
@@ -167,24 +159,22 @@ void Quad::Draw(float z)
 	//checkGlError("Rotation");
 	//shader->setUniformMatrix("Scale", Scaling);
 	//checkGlError("Rotation");
-
-	//static float angle = 0.0f;
-	//angle += 0.01f;
-
-	glm::mat4 model = glm::translate(m_pos) * Rotate;
+	m_pos.z = z;
+	//Translate = glm::translate(m_pos);
+	
+	glm::mat4 model = Translate * Rotate * Scaling;
 		//glm::rotate( angle*100.0f, 0.0f,1.0f,1.0f );
 
 	glm::mat4 view = glm::lookAt(
-		glm::vec3(0,0,-2), // Camera is at (4,3,3), in World Space
+		glm::vec3(0,0,1), // Camera is at (4,3,3), in World Space
 		glm::vec3(0,0,0), // and looks at the origin
 		glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
 		);
 	
-	glm::mat4 proj = glm::perspectiveFov(45.0f,1280.0f, 720.0f, 0.001f,100.0f);
-
-
-
-	glm::mat4 modelViewProjection = proj * view * model;
+	//Sets perspective camera.           ANGLE, WIDTH   HEIGHT  NEAR   FAR
+	//glm::mat4 proj = glm::perspectiveFov(45.0f,1280.0f, 720.0f, 0.001f,100.0f);
+	glm::mat4 proj =  glm::ortho(0.0f,1280.0f,0.0f,720.0f);
+	glm::mat4 modelViewProjection = proj * model;
 
 	shader->setUniformMatrix("modelViewProj", modelViewProjection);
 	checkGlError("modelViewProj");
