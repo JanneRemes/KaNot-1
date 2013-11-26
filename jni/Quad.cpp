@@ -1,33 +1,33 @@
 #include <Quad.h>
-
 #include <cmath>
 #include <stdlib.h>
+
 float* Quad::Projection = NULL;
 
 Quad::Quad(int H,int W,int D, int X,int Y,int Z)
 {
 	checkGlError("Quad tehty");
+
 	w=W;
 	h=H;
-/*	x=X;
-	y=Y;*/
 	d=D;
-//	z=Z;
-	//setPosition(X,Y,Z);
-	Translation = (float*)calloc(16,sizeof(float));
-	Rotation = (float*)calloc(16,sizeof(float));
-	Scale = (float*)calloc(16,sizeof(float));
+
 	glGenBuffers(1,&VBO);
+	checkGlError("glGenBuffers");
+
 	GenBuffer();
 	setPosition(X,Y,Z);
 	resize(w,h,d);
 	Rotate = glm::mat4(1.0f);
+
+	camera = new Camera();
 
 }
 
 void Quad::GenBuffer()
 {
 	checkGlError("Quad Buffer");
+
 	float* Data = (float*)malloc(30*sizeof(float));
 
 	Data[0] = -0.5f; 
@@ -76,30 +76,21 @@ void Quad::GenBuffer()
 
 	Data[28] = 1; 
     Data[29] = 0; 
-	//objLoader.loadObj("assets/cube.obj",_data,_faces);
 
 	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 
 	glBufferData(GL_ARRAY_BUFFER,sizeof(Data)*30,Data,GL_DYNAMIC_DRAW);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(_faces) * sizeof(glm::vec3), &_data[0], GL_STATIC_DRAW);
 
 	free(Data);
 	checkGlError("Quad Buffer end");
+
 }
 
 void Quad::setPosition(int X,int Y, int Z)
 {
-	m_pos = glm::vec3(X,Y,Z);
-	//Translation[0] = 1;
-	//Translation[3] = X;
-	//Translation[5] = 1;
-	//Translation[7] = Y;
-	//Translation[10] = 1;
-	//Translation[15] = 1;
-	//glm::vec3 trans(X,Y,Z);
-	Translate = glm::translate(m_pos);
 
-	//x = X; y = Y; z = Z;
+	m_pos		= glm::vec3(X,Y,Z);
+	Translate	= glm::translate(m_pos);
 
 }
 
@@ -110,76 +101,79 @@ void Quad::resize(int W,int H, int D)
 	h = H;
 	d = D;
 
-	//Scale[0] = w;
-	//Scale[5] = h;
-	//Scale[10] = 1;
-	//Scale[15] = 1;
+	Scaling		= glm::scale(w,h,d);
 
-	Scaling = glm::scale(w,h,d);
 }
 
 void Quad::rotate(float r, int x, int y ,int z)
 {
-	glm::vec3 RotationAxis(x,y,z);
-	Rotate = glm::rotate(r,RotationAxis);
+
+	glm::vec3	RotationAxis(x,y,z);
+	Rotate   =	glm::rotate(r,RotationAxis);
+
 }
 
 void Quad::rotate(float r, glm::vec3 v)
 {
-	Rotate = glm::rotate(r,v);
+
+	Rotate   =	glm::rotate(r,v);
+
 }
 
 void Quad::Draw(float z)
 {
 	checkGlError("Draw alkoi");
+
+	//Enable shitz because GL
 	glEnableVertexAttribArray(shader->Position);
 	glEnableVertexAttribArray(shader->Uv);
 	glUseProgram(shader->Program);
 
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_DEPTH_TEST);
+	glDepthFunc	(GL_LEQUAL);
+	glEnable	(GL_DEPTH_TEST);
 
-	glEnable (GL_BLEND);
+	glEnable	(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texid);
+	glActiveTexture	(GL_TEXTURE0);
+	glBindTexture	(GL_TEXTURE_2D, texid);
 
 	glUniform1i(shader->loc, 0);
 	checkGlError("Uniform1i");
 
-
+	//attributepointers for shader
     glVertexAttribPointer(shader->Position,3,GL_FLOAT,GL_FALSE,5*sizeof(GL_FLOAT),0); 
 	glVertexAttribPointer(shader->Uv,2,GL_FLOAT,GL_FALSE,5*sizeof(GL_FLOAT),(void*)(sizeof(GL_FLOAT)*3)); 
-	//glUniformMatrix4fv(shader->loc2,1,GL_FALSE,Projection);
-	//glUniformMatrix4fv(shader->loc3,1,GL_FALSE,Translation);
-	//glUniformMatrix4fv(shader->loc4,1,GL_FALSE,Rotation);
-	//glUniformMatrix4fv(shader->loc5,1,GL_FALSE,Scale);
-	//shader->setUniformMatrix("Rotation", Rotate);
-	//checkGlError("Rotation");
-	//shader->setUniformMatrix("Scale", Scaling);
-	//checkGlError("Rotation");
+
+	//this z trying to be depth for sprite
 	m_pos.z = z;
+
 	//Translate = glm::translate(m_pos);
 	
+	// Create modelmatrix
 	glm::mat4 model = Translate * Rotate * Scaling;
-		//glm::rotate( angle*100.0f, 0.0f,1.0f,1.0f );
 
-	glm::mat4 view = glm::lookAt(
-		glm::vec3(0,0,1), // Camera is at (4,3,3), in World Space
-		glm::vec3(0,0,0), // and looks at the origin
-		glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-		);
-	
-	//Sets perspective camera.           ANGLE, WIDTH   HEIGHT  NEAR   FAR
-	//glm::mat4 proj = glm::perspectiveFov(45.0f,1280.0f, 720.0f, 0.001f,100.0f);
+	//set 2Dcamera
+	camera->Camera2D();
+
+	//set view
+	view = camera->View;
+
+	//Projection matrix               width        heigth
 	glm::mat4 proj =  glm::ortho(0.0f,1280.0f,0.0f,720.0f);
+
+	//Model view projection
 	glm::mat4 modelViewProjection = proj * model;
 
+	//Send modelview projection to shader
 	shader->setUniformMatrix("modelViewProj", modelViewProjection);
 	checkGlError("modelViewProj");
+
+	//these are vital for Draw functionality
 	glBindBuffer(GL_ARRAY_BUFFER,VBO); 
     glDrawArrays(GL_TRIANGLES,0,6);
+
+	//and final shader things: attribarrays to shader
 	glDisableVertexAttribArray(shader->Position);
 	glDisableVertexAttribArray(shader->Uv);
 	
@@ -198,5 +192,5 @@ void Quad::setShader(Shader* shader2)
 
 Quad::~Quad(void)
 {
-
+	delete camera;
 }

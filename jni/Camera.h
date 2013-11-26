@@ -11,6 +11,7 @@ class Camera
 public:
 	Camera();
 	~Camera();
+	void Camera2D();
 	glm::mat4 Projection;
 	glm::mat4 View;
 private:

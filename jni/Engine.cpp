@@ -21,9 +21,11 @@ Engine::Engine()
 	//Make link texture
 	texture = new Texture();
 	texture->loadTexture("Link2.tga");
+
 	//Make octorock texture
 	texture_octo = new Texture();
 	texture_octo->loadTexture("Octo.tga");
+
 	//Make ganon texture
 	texture_ganon = new Texture();
 	texture_ganon->loadTexture("Ganon.tga");
@@ -73,9 +75,12 @@ void Engine::Update()
 
 	rotation_ganon += 1;
 	Quad1->rotate(rotation_ganon,0,0,1);
+
+	Quad2->setPosition(rotation_ganon,0,0);
+
 	//Quad1->resize(1,1,0);
 	//Quad2->resize(1,1,0);
-	//Quad3->resize(1,1,0);
+	Quad3->resize(1,1,0);
 	//Quad3->resize(abs(sin(rotation_ganon/50))*320,abs(sin(rotation_ganon/50)*320));
 	//Quad3->rotate(rotation_ganon/100);
 }
