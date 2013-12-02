@@ -6,6 +6,7 @@
 #include <Texture.h>
 #include <Camera.h>
 #include <Shader.h>
+#include <Keyboard.h>
 //#include <OpenGL.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
@@ -19,12 +20,12 @@ class Engine
 public:
 	Engine();
 	~Engine();
-	void fixAspectRatio(float desiredWidth,float desiredHeight, float width, float heigth);
-	void Update();
-	void Draw();
+	void	fixAspectRatio(float desiredWidth,float desiredHeight, float width, float heigth);
+	void	Update();
+	void	Draw();
 	//void printDebug(bool error, const char* format, ...);
-	float Scale, blackBarH, blackBarV;
-	int x,y;
+	float	Scale, blackBarH, blackBarV;
+	int		x,y;
 
 private:
 
@@ -35,23 +36,20 @@ private:
 	GLfloat* GlProjection;
 	//GLfloat* GlTranslation;
 
-	//Shader* shader;
-	//Shader* shader2;
-
-	Quad* Quad1;
-	Quad* Quad2;
-	Quad* Quad3;
+	Quad*	Quad1;
+	Quad*	Quad2;
+	Quad*	Quad3;
 
 	//GLfloat* Data;
-	float position1;
-	float rotation_ganon;
-	int positionPhase;
-	float sine;
+	float	position1;
+	float	rotationangle;
+	int		positionPhase;
+	float	sine;
 
-	Camera* camera;
-	Shader* shader;
-	//GLuint Texture1;
-	//unsigned int num_vertices;
+	Camera*		camera;
+	Shader*		shader;
+	Keyboard*	keyboard;
+
 };
 
 #endif

@@ -13,13 +13,13 @@ Engine::Engine()
 {
 	Scale = blackBarH = blackBarV = 0;
 
-	x = y = 0;
-	position1 = 0;
-	positionPhase = 0;
-	rotation_ganon = 0;
+	x = y			= 0;
+	position1		= 0;
+	positionPhase	= 0;
+	rotationangle	= 0;
 
 	//Make link texture
-	texture = new Texture();
+	texture =	new Texture();
 	texture->loadTexture("Link2.tga");
 
 	//Make octorock texture
@@ -30,14 +30,15 @@ Engine::Engine()
 	texture_ganon = new Texture();
 	texture_ganon->loadTexture("Ganon.tga");
 
-	shader = new Shader();
-	camera = new Camera();
+	shader =	new Shader();
+	camera =	new Camera();
+	keyboard =	new Keyboard();
 
 	static float angle = 0.0f;
 	angle += 0.5f;
 
 	//Draw texture 1
-	Quad1 = new Quad(128,128,0,100,100,0);
+	Quad1 =	new Quad(128,128,0,100,100,0);
 	Quad1->setShader(shader);
 	Quad1->setTexture(texture_octo->texture);
 
@@ -51,38 +52,37 @@ Engine::Engine()
 	Quad3->setShader(shader);
 	Quad3->setTexture(texture_ganon->texture);
 
-	sine = 0;
-	position1 = 0;
+	sine		= 0;
+	position1	= 0;
 }
 
 Engine::~Engine()
 {
 	//Delete always pointers! If there is "new Thing()" -> delete it.
-	delete texture;
-	delete texture_octo;
-	delete texture_ganon;
-	delete Quad1;
-	delete Quad2;
-	delete Quad3;
+	delete	texture;
+	delete	texture_octo;
+	delete	texture_ganon;
+	delete	Quad1;
+	delete	Quad2;
+	delete	Quad3;
 
 }
 
 void Engine::Update()
 {
+	rotationangle += 1;
 
-	//sine+0.01f;
-	//Quad1->move(sin(rotation_ganon/15)*500, cos(rotation_ganon/15)*100);
+	//Octo
+	Quad1->setPosition(sin(rotationangle/15)*100+600, cos(rotationangle/15)*100+400,0);
+	Quad1->rotate(rotationangle,0,0,1);
+	//Link
+	Quad2->setPosition(rotationangle,0,0);
+	//Ganon
+	Quad3->setPosition(800,250,0);
+	Quad3->resize(abs(sin(rotationangle/50))*120,abs(sin(rotationangle/50)*120),0);
+	Quad3->rotate(rotationangle,0,0,-1);
 
-	rotation_ganon += 1;
-	Quad1->rotate(rotation_ganon,0,0,1);
 
-	Quad2->setPosition(rotation_ganon,0,0);
-
-	//Quad1->resize(1,1,0);
-	//Quad2->resize(1,1,0);
-	Quad3->resize(1,1,0);
-	//Quad3->resize(abs(sin(rotation_ganon/50))*320,abs(sin(rotation_ganon/50)*320));
-	//Quad3->rotate(rotation_ganon/100);
 }
 
 	/**

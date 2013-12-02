@@ -34,7 +34,7 @@ private:
 	void		GenBuffer();
 	float*		Scale;
 	float*		Translation;
-	int /*x,y,*/w,h,d/*,z*/;
+	int			w,h,d/*,z,x,y,*/;
 	glm::vec3	m_pos;
 	float*		Data;
 	float*		Rotation;

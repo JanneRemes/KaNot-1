@@ -35,12 +35,12 @@ Shader::Shader()
 	static const char gVertexShader[] =
     "attribute vec3 vPosition;\n"
 	"attribute vec2 vUv;\n"
-	"uniform mat4 modelViewProj;\n"
+	"uniform mat4	modelViewProj;\n"
 //	"uniform mat4 Scale;\n"
 //	"uniform mat4 Rotation;\n"
 //	"uniform mat4 View;\n"
 //	"uniform mat4 matProjection;\n"
-	"varying vec2 Uv;\n"
+	"varying vec2	Uv;\n"
     "void main() {\n"
 	"  gl_Position = modelViewProj * vec4(vPosition,1.0);\n"
 //	"  gl_Position *= Scale;\n"	
@@ -55,11 +55,11 @@ Shader::Shader()
 	LOGI(gVertexShader);
  
     static const char gFragmentShader[] = 
-	"precision mediump float;\n"
-	"varying vec2 Uv;\n"
-	"uniform sampler2D s_texture;\n"
+	"precision mediump	float;\n"
+	"varying vec2		Uv;\n"
+	"uniform sampler2D	s_texture;\n"
     "void main() {\n"
-    "  gl_FragColor = texture2D(s_texture,Uv);\n"
+    "  gl_FragColor =	texture2D(s_texture,Uv);\n"
     "}\n"; 
 
 
@@ -95,6 +95,7 @@ Shader::Shader()
 	Uv = glGetAttribLocation(Program,"vUv");
 	loc = glGetUniformLocation(Program, "s_texture");
 	loc2 = glGetUniformLocation(Program, "Projection");
+
 	//loc3 = glGetUniformLocation(Program, "Translation");
 	//loc4 = glGetUniformLocation(Program, "Rotation");
 	//loc5 = glGetUniformLocation(Program, "Scale");
