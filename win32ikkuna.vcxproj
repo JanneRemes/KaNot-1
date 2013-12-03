@@ -20,6 +20,7 @@
     <ClCompile Include="jni\objLoader.cpp" />
     <ClCompile Include="jni\Quad.cpp" />
     <ClCompile Include="jni\Shader.cpp" />
+    <ClCompile Include="jni\SpriteBatch.cpp" />
     <ClCompile Include="jni\Texture.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="OpenGL.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="jni\objLoader.h" />
     <ClInclude Include="jni\Quad.h" />
     <ClInclude Include="jni\Shader.h" />
+    <ClInclude Include="jni\SpriteBatch.h" />
     <ClInclude Include="jni\Texture.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="OpenGL.h" />
