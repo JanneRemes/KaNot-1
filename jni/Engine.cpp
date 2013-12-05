@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <FileReader.h>
 #include <cmath>
+#include <Windows.h>
 
 #include <Quad.h>
 //#include <Windows.h>
@@ -54,6 +55,7 @@ Engine::Engine()
 
 	sine		= 0;
 	position1	= 0;
+	link_rotate = 0;
 }
 
 Engine::~Engine()
@@ -76,13 +78,38 @@ void Engine::Update()
 	Quad1->setPosition(sin(rotationangle/15)*100+600, cos(rotationangle/15)*100+400,0);
 	Quad1->rotate(rotationangle,0,0,1);
 	//Link
-	Quad2->setPosition(rotationangle,0,0);
+	//Quad2->setPosition(rotationangle,0,0);
 	//Ganon
 	Quad3->setPosition(800,250,0);
 	Quad3->resize(abs(sin(rotationangle/50))*120,abs(sin(rotationangle/50)*120),0);
 	Quad3->rotate(rotationangle,0,0,-1);
 
-
+	if(GetAsyncKeyState(VK_UP))
+	{
+		Quad2->move(0,5);
+	}
+	if(GetAsyncKeyState(VK_DOWN))
+	{
+		Quad2->move(0,-5);
+	}
+	if(GetAsyncKeyState(VK_LEFT))
+	{
+		Quad2->move(-5,0);
+	}
+	if(GetAsyncKeyState(VK_RIGHT))
+	{
+		Quad2->move(5,0);
+	}
+	if(GetAsyncKeyState(VK_SPACE))
+	{
+		link_rotate += 50;
+		Quad2->rotate(link_rotate,0,0,1);
+	}
+	else
+	{
+		link_rotate = 0;
+		Quad2->rotate(link_rotate,0,0,1);
+	}
 }
 
 	/**
@@ -168,9 +195,9 @@ void Engine::Draw()
 	//Important GL draw clear thing
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	//Quad draws goes here. Remember the draw order.
-	Quad2->Draw(0.9f);
+	
 	Quad1->Draw(0.8f);
-	Quad3->Draw(0.7f);
-
+	Quad3->Draw(0.9f);
+	Quad2->Draw(0.7f);
 }
 

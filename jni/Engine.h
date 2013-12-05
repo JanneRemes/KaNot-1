@@ -42,7 +42,7 @@ private:
 
 	//GLfloat* Data;
 	float	position1;
-	float	rotationangle;
+	float	rotationangle, link_rotate;
 	int		positionPhase;
 	float	sine;
 

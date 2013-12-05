@@ -13,7 +13,9 @@ class Quad
 public:
 	Quad(int H,int W,int D, int X,int Y,int Z);
 	void		setPosition(int,int,int);
-	void		resize (int,int,int);
+	void		setPosition(glm::vec3);
+	void		move(int,int);
+	void		resize(int,int,int);
 	void		rotate(float,int,int,int);
 	void		rotate(float,glm::vec3);
 	void		Draw(float);

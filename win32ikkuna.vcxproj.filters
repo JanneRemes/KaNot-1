@@ -46,6 +46,12 @@
     <ClCompile Include="jni\SpriteBatch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="jni\Rectangle.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="jni\input.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jni\Engine.h">
@@ -91,6 +97,12 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="jni\SpriteBatch.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\Rectangle.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="jni\input.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

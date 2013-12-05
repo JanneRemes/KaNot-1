@@ -88,9 +88,23 @@ void Quad::GenBuffer()
 
 void Quad::setPosition(int X,int Y, int Z)
 {
+	setPosition(glm::vec3(X,Y,Z));
+}
 
-	m_pos		= glm::vec3(X,Y,Z);
+void Quad::setPosition(glm::vec3 pos)
+{
+
+	m_pos		= pos;
 	Translate	= glm::translate(m_pos);
+
+}
+
+void Quad::move(int X, int Y)
+{
+	m_pos.x += X;
+	m_pos.y += Y;
+
+	setPosition(m_pos);
 
 }
 
@@ -116,13 +130,14 @@ void Quad::rotate(float r, int x, int y ,int z)
 void Quad::rotate(float r, glm::vec3 v)
 {
 
-	Rotate   =	glm::rotate(r,v);
+	Rotate  =	glm::rotate(r,v);
 
 }
 
 void Quad::Draw(float z)
 {
 	checkGlError("Draw alkoi");
+	glBindBuffer(GL_ARRAY_BUFFER,VBO); 
 
 	//Enable shitz because GL
 	glEnableVertexAttribArray(shader->Position);
@@ -170,7 +185,7 @@ void Quad::Draw(float z)
 	checkGlError("modelViewProj");
 
 	//these are vital for Draw functionality
-	glBindBuffer(GL_ARRAY_BUFFER,VBO); 
+	
     glDrawArrays(GL_TRIANGLES,0,6);
 
 	//and final shader things: attribarrays to shader
