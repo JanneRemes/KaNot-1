@@ -50,6 +50,7 @@ private:
 	Shader*		shader;
 	Keyboard*	keyboard;
 
+	glm::vec4 color;
 };
 
 #endif

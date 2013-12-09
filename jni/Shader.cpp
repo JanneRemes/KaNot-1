@@ -58,8 +58,10 @@ Shader::Shader()
 	"precision mediump	float;\n"
 	"varying vec2		Uv;\n"
 	"uniform sampler2D	s_texture;\n"
+	"uniform float opacity; \n"
+	"uniform vec4 color; \n"
     "void main() {\n"
-    "  gl_FragColor =	texture2D(s_texture,Uv);\n"
+    "  gl_FragColor =	color*texture2D(s_texture,Uv);\n"
     "}\n"; 
 
 
@@ -95,6 +97,8 @@ Shader::Shader()
 	Uv = glGetAttribLocation(Program,"vUv");
 	loc = glGetUniformLocation(Program, "s_texture");
 	loc2 = glGetUniformLocation(Program, "Projection");
+	loc3 = glGetUniformLocation(Program, "opacity");
+	loc4 = glGetUniformLocation(Program, "color");
 
 	//loc3 = glGetUniformLocation(Program, "Translation");
 	//loc4 = glGetUniformLocation(Program, "Rotation");
@@ -112,5 +116,21 @@ void Shader::setUniformMatrix(const char* name, glm::mat4 matrix)
 	GLuint MatrixID = glGetUniformLocation(Program, name);	
 	checkGlError("glGetUniformLocation");
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &matrix[0][0]);
+	checkGlError("glUniformMatrix4fv");
+}
+
+void Shader::setUniformFloat(const char* name, float value)
+{
+	GLuint MatrixID = glGetUniformLocation(Program, name);	
+	checkGlError("glGetUniformLocation");
+	glUniform1f(MatrixID, value);
+	checkGlError("glUniformMatrix4fv");
+}
+
+void Shader::setUniformVec4(const char* name, glm::vec4 vector4)
+{
+	GLint MatrixID = glGetUniformLocation(Program, name);	
+	checkGlError("glGetUniformLocation");
+	glUniform4f(MatrixID, vector4.x, vector4.y, vector4.z, vector4.w);
 	checkGlError("glUniformMatrix4fv");
 }

@@ -17,6 +17,7 @@ Quad::Quad(int H,int W,int D, int X,int Y,int Z)
 
 	GenBuffer();
 	setPosition(X,Y,Z);
+
 	resize(w,h,d);
 	Rotate = glm::mat4(1.0f);
 
@@ -203,9 +204,28 @@ void Quad::setTexture(GLuint Texture)
 void Quad::setShader(Shader* shader2)
 {
 	shader = shader2;
+	_color   = glm::vec4(1.0f,1.0f,1.0f,1.0f);
+	_opacity = 1.0f;
+	setColor(_color);
+	setOpacity(_opacity);
+}
+
+void Quad::setColor(glm::vec4 color )
+{
+	_color = color;
+	shader->setUniformVec4("color", _color);
+	checkGlError("setUniformVec4");
+}
+
+void Quad::setOpacity(float opacity)
+{
+	_opacity = opacity;
+	shader->setUniformFloat("opacity", _opacity);
+	checkGlError("setUniformFloat");
 }
 
 Quad::~Quad(void)
 {
 	delete camera;
 }
+

@@ -21,11 +21,16 @@ public:
 	void		Draw(float);
 	void		setTexture(GLuint);
 	void		setShader(Shader*);
+	void        setColor(glm::vec4);
+	void        setOpacity(float);
 	static float*Projection;
 
 	glm::mat4	Rotate;
 	glm::mat4	Scaling;
 	glm::mat4	Translate;
+
+	glm::vec4   _color;
+	float       _opacity;
 
 	Camera*		camera;
 

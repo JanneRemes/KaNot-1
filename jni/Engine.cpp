@@ -3,6 +3,7 @@
 #include <FileReader.h>
 #include <cmath>
 #include <Windows.h>
+#include <time.h>
 
 #include <Quad.h>
 //#include <Windows.h>
@@ -110,6 +111,8 @@ void Engine::Update()
 		link_rotate = 0;
 		Quad2->rotate(link_rotate,0,0,1);
 	}
+
+	Quad2->setColor(glm::vec4(0,1,1,1));
 }
 
 	/**
@@ -195,9 +198,11 @@ void Engine::Draw()
 	//Important GL draw clear thing
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	//Quad draws goes here. Remember the draw order.
-	
+	Quad1->setColor(glm::vec4(1,0,1,1));
 	Quad1->Draw(0.8f);
+	Quad3->setColor(glm::vec4(0,1,1,1));
 	Quad3->Draw(0.9f);
+	Quad2->setColor(glm::vec4(1,1,0,1));
 	Quad2->Draw(0.7f);
 }
 
