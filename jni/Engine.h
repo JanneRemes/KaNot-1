@@ -43,8 +43,8 @@ private:
 	//GLfloat* Data;
 	float	position1;
 	float	rotationangle, link_rotate;
-	int		positionPhase;
-	float	sine;
+	int		positionPhase,colorPhase;
+	float	sine,red,green,blue;
 
 	Camera*		camera;
 	Shader*		shader;

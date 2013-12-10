@@ -57,6 +57,12 @@ Engine::Engine()
 	sine		= 0;
 	position1	= 0;
 	link_rotate = 0;
+
+	red = 0;
+	blue = 1;
+	green = 0;
+	colorPhase = 0;
+
 }
 
 Engine::~Engine()
@@ -112,7 +118,30 @@ void Engine::Update()
 		Quad2->rotate(link_rotate,0,0,1);
 	}
 
-	Quad2->setColor(glm::vec4(0,1,1,1));
+	if(colorPhase == 0)
+	{
+		blue -= 0.5f/10;
+		red += 0.5f/10;
+		if(red >= 1)
+			colorPhase++;
+	}
+	if(colorPhase == 1)
+	{
+		green += 0.5f/10;
+		red -= 0.5f/10;
+		if(red <= 0)
+			colorPhase++;
+	}
+	if(colorPhase == 2)
+	{	
+		blue += 0.5f/10;
+		green -= 0.5f/10;
+		if(blue >= 1)
+			colorPhase = 0;
+	}
+	color = glm::vec4(red,blue,green,1);
+
+	//Quad2->setColor(glm::vec4(1,1,1,1));
 }
 
 	/**
@@ -198,11 +227,11 @@ void Engine::Draw()
 	//Important GL draw clear thing
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	//Quad draws goes here. Remember the draw order.
-	Quad1->setColor(glm::vec4(1,0,1,1));
+	Quad1->setColor(color);
 	Quad1->Draw(0.8f);
-	Quad3->setColor(glm::vec4(0,1,1,1));
+	Quad3->setColor(glm::vec4(1,1,1,1));
 	Quad3->Draw(0.9f);
-	Quad2->setColor(glm::vec4(1,1,0,1));
+	Quad2->setColor(glm::vec4(1,1,1,1));
 	Quad2->Draw(0.7f);
 }
 
