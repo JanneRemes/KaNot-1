@@ -8,6 +8,9 @@
 #include <Shader.h>
 #include <Keyboard.h>
 #include <vector>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 //#include <OpenGL.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
@@ -48,7 +51,13 @@ private:
 	float	position1;
 	float	rotationangle, link_rotate;
 	int		positionPhase,colorPhase;
-	float	sine,red,green,blue,testi,snowfade;
+	float	sine,red,green,blue,testi,snowfade,snowspawn,falling;
+
+	float randPosX();
+	float randPosY();
+	float randomMultp();
+	float randomi;
+	int snowCount;
 
 	Camera*		camera;
 	Shader*		shader;

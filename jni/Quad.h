@@ -38,6 +38,8 @@ public:
 
 	Camera*		camera;
 
+	float		_speed;
+
 	~Quad(void);
 
 private:

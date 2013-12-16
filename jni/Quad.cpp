@@ -11,6 +11,7 @@ Quad::Quad(int H,int W,int D, int X,int Y,int Z)
 	w=W;
 	h=H;
 	d=D;
+	_speed = 1;
 
 	glGenBuffers(1,&VBO);
 	checkGlError("glGenBuffers");

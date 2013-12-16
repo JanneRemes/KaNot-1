@@ -20,6 +20,7 @@ Engine::Engine()
 	positionPhase	= 0;
 	rotationangle	= 0;
 	snowfade		= 0;
+	snowspawn		= 0;
 
 	//Make link texture
 	texture =	new Texture();
@@ -68,6 +69,8 @@ Engine::Engine()
 	green = 0;
 	colorPhase = 0;
 	snowfade = 1;
+	falling = 1;
+	snowCount = 50;
 
 }
 
@@ -81,36 +84,42 @@ Engine::~Engine()
 	delete	Quad2;
 	delete	Quad3;
 
+	for(int i = 0;snowflakes.size() >= snowCount;i++)
+	{
+		delete snowflakes[i];
+	}
+
+
 }
 
 void Engine::Update()
 {
 	rotationangle += 1;
 
-	for(int i = 0;snowflakes.size() <= 10;i++)
+	for(int i = 0;snowflakes.size() <= snowCount;i++)
 	{
-		snowflakes.push_back(new Quad(24,24,0,100+(i*100),700-(i*10),0));
+		snowspawn = 100+(i*100);
+		snowflakes.push_back(new Quad(24,24,0,randPosX(),700-(i*randomMultp()),0));
 		snowflakes[i]->setShader(shader);
 		snowflakes[i]->setTexture(texture_snow->texture);
 	}
 
-	for(int i = 0; i <= 10; i++)
+	for(int i = 0; i <= snowCount; i++)
 	{
-		snowflakes[i]->move(0,-1);
+		snowflakes[i]->move(0,-1*(1+snowflakes[i]->_speed));
 		snowflakes[i]->rotate(rotationangle*10,0,0,1);
-		snowflakes[i]->_opacity -=0.002f;
+		snowflakes[i]->_opacity -=0.004f;
 		snowflakes[i]->setOpacity(snowflakes[i]->getOpacity());
 
-		if(snowflakes[i]->getY() <= 300)
+		if(snowflakes[i]->getY() <= 0)
 		{
-			snowflakes[i]->move(0,400);
+			snowflakes[i]->setPosition(randPosX(),700-(i*randomMultp()),0);
 			snowfade = 1.0f;
 			snowflakes[i]->_opacity =1.0f;
+			snowflakes[i]->_speed = randomMultp();
+			
 		}
 	}
-	
-	testi = snowflakes[5]->getY();
-
 
 	//Octo
 	Quad1->setPosition(sin(rotationangle/15)*100+600, cos(rotationangle/15)*100+400,0);
@@ -240,10 +249,23 @@ void Engine::Draw()
 	Quad2->setColor(glm::vec4(1,1,1,1));
 	Quad2->Draw(0.7f);
 
-	for(int i = 0; i <= 10; i++)
+	for(int i = 0; i <= snowCount; i++)
 	{
 		snowflakes[i]->setColor(glm::vec4(1,1,1,snowflakes[i]->getOpacity()));
 		snowflakes[i]->Draw(0.9f);
 	}
 }
 
+float Engine::randPosX()
+{
+	randomi = rand()%1280;
+	//srand(time(NULL));
+	return randomi;
+}
+
+float Engine::randomMultp()
+{
+	randomi = rand()%10;
+	//srand(time(NULL));
+	return randomi;
+}
