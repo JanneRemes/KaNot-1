@@ -19,6 +19,7 @@ Engine::Engine()
 	position1		= 0;
 	positionPhase	= 0;
 	rotationangle	= 0;
+	snowfade		= 0;
 
 	//Make link texture
 	texture =	new Texture();
@@ -31,6 +32,9 @@ Engine::Engine()
 	//Make ganon texture
 	texture_ganon = new Texture();
 	texture_ganon->loadTexture("Ganon.tga");
+
+	texture_snow = new Texture();
+	texture_snow->loadTexture("snow.tga");
 
 	shader =	new Shader();
 	camera =	new Camera();
@@ -54,6 +58,7 @@ Engine::Engine()
 	Quad3->setShader(shader);
 	Quad3->setTexture(texture_ganon->texture);
 
+
 	sine		= 0;
 	position1	= 0;
 	link_rotate = 0;
@@ -62,6 +67,7 @@ Engine::Engine()
 	blue = 1;
 	green = 0;
 	colorPhase = 0;
+	snowfade = 1;
 
 }
 
@@ -80,6 +86,31 @@ Engine::~Engine()
 void Engine::Update()
 {
 	rotationangle += 1;
+
+	for(int i = 0;snowflakes.size() <= 10;i++)
+	{
+		snowflakes.push_back(new Quad(24,24,0,100+(i*100),700-(i*10),0));
+		snowflakes[i]->setShader(shader);
+		snowflakes[i]->setTexture(texture_snow->texture);
+	}
+
+	for(int i = 0; i <= 10; i++)
+	{
+		snowflakes[i]->move(0,-1);
+		snowflakes[i]->rotate(rotationangle*10,0,0,1);
+		snowflakes[i]->_opacity -=0.002f;
+		snowflakes[i]->setOpacity(snowflakes[i]->getOpacity());
+
+		if(snowflakes[i]->getY() <= 300)
+		{
+			snowflakes[i]->move(0,400);
+			snowfade = 1.0f;
+			snowflakes[i]->_opacity =1.0f;
+		}
+	}
+	
+	testi = snowflakes[5]->getY();
+
 
 	//Octo
 	Quad1->setPosition(sin(rotationangle/15)*100+600, cos(rotationangle/15)*100+400,0);
@@ -186,31 +217,6 @@ void Engine::fixAspectRatio(float desiredWidth, float desiredHeight, float width
 	shader->setUniformMatrix("View",camera->View);
 	checkGlError("setuniformi view");
 
-	//GLfloat projection[16]  = 
-	//{
-	//	1.0f/desiredWidth, 0,	0,	-0.5f
-	//	,0,	1.0f/desiredHeight,	0,	0.5f
-	//	,0,	0,	1,		0
-	//	,0,	0,	0,		1
-	//};
-	//Quad::Projection = (float*)calloc(16,sizeof(float));
-	//Quad::Projection[0] = projection[0];
-	//Quad::Projection[1] = projection[1];
-	//Quad::Projection[2] = projection[2];
-	//Quad::Projection[3] = projection[3];
-	//Quad::Projection[4] = projection[4];
-	//Quad::Projection[5] = projection[5];
-	//Quad::Projection[6] = projection[6];
-	//Quad::Projection[7] = projection[7];
-	//Quad::Projection[8] = projection[8];
-	//Quad::Projection[9] = projection[9];
-	//Quad::Projection[10] = projection[10];
-	//Quad::Projection[11] = projection[11];
-	//Quad::Projection[12] = projection[12];
-	//Quad::Projection[13] = projection[13];
-	//Quad::Projection[14] = projection[14];
-	//Quad::Projection[15] = projection[15];
-
 }
 
 
@@ -233,5 +239,11 @@ void Engine::Draw()
 	Quad3->Draw(0.9f);
 	Quad2->setColor(glm::vec4(1,1,1,1));
 	Quad2->Draw(0.7f);
+
+	for(int i = 0; i <= 10; i++)
+	{
+		snowflakes[i]->setColor(glm::vec4(1,1,1,snowflakes[i]->getOpacity()));
+		snowflakes[i]->Draw(0.9f);
+	}
 }
 

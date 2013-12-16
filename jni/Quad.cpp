@@ -224,6 +224,21 @@ void Quad::setOpacity(float opacity)
 	checkGlError("setUniformFloat");
 }
 
+float Quad::getX()
+{
+	return m_pos.x;
+}
+
+float Quad::getY()
+{
+	return m_pos.y;
+}
+
+float Quad::getOpacity()
+{
+	return _opacity;
+}
+
 Quad::~Quad(void)
 {
 	delete camera;

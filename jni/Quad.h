@@ -25,6 +25,10 @@ public:
 	void        setOpacity(float);
 	static float*Projection;
 
+	float getX();
+	float getY();
+	float getOpacity();
+
 	glm::mat4	Rotate;
 	glm::mat4	Scaling;
 	glm::mat4	Translate;

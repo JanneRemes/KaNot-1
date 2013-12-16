@@ -7,6 +7,7 @@
 #include <Camera.h>
 #include <Shader.h>
 #include <Keyboard.h>
+#include <vector>
 //#include <OpenGL.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
@@ -32,6 +33,7 @@ private:
 	Texture* texture;
 	Texture* texture_octo;
 	Texture* texture_ganon;
+	Texture* texture_snow;
 
 	GLfloat* GlProjection;
 	//GLfloat* GlTranslation;
@@ -39,12 +41,14 @@ private:
 	Quad*	Quad1;
 	Quad*	Quad2;
 	Quad*	Quad3;
+	
+	std::vector<Quad*> snowflakes;
 
 	//GLfloat* Data;
 	float	position1;
 	float	rotationangle, link_rotate;
 	int		positionPhase,colorPhase;
-	float	sine,red,green,blue;
+	float	sine,red,green,blue,testi,snowfade;
 
 	Camera*		camera;
 	Shader*		shader;
