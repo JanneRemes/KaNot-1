@@ -27,6 +27,8 @@ public:
 	void	fixAspectRatio(float desiredWidth,float desiredHeight, float width, float heigth);
 	void	Update();
 	void	Draw();
+	void	CheckCollision(float obj1_x, float obj2_x, float obj1_y, float obj2_y);
+	float  _obj1_x,  _obj2_x,  _obj1_y,  _obj2_y;
 	//void printDebug(bool error, const char* format, ...);
 	float	Scale, blackBarH, blackBarV;
 	int		x,y;
@@ -64,6 +66,7 @@ private:
 	Keyboard*	keyboard;
 
 	glm::vec4 color;
+	glm::vec4 linkcolor;
 };
 
 #endif

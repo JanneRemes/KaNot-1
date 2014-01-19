@@ -72,6 +72,8 @@ Engine::Engine()
 	falling = 1;
 	snowCount = 50;
 
+	linkcolor = glm::vec4(1,1,1,1);
+
 }
 
 Engine::~Engine()
@@ -182,6 +184,9 @@ void Engine::Update()
 	color = glm::vec4(red,blue,green,1);
 
 	//Quad2->setColor(glm::vec4(1,1,1,1));
+
+	CheckCollision(Quad2->getX(), Quad1->getX(), Quad1->getY(), Quad2->getY()); 
+
 }
 
 	/**
@@ -246,7 +251,7 @@ void Engine::Draw()
 	Quad1->Draw(0.8f);
 	Quad3->setColor(glm::vec4(1,1,1,1));
 	Quad3->Draw(0.9f);
-	Quad2->setColor(glm::vec4(1,1,1,1));
+	Quad2->setColor(linkcolor);
 	Quad2->Draw(0.7f);
 
 	for(int i = 0; i <= snowCount; i++)
@@ -268,4 +273,30 @@ float Engine::randomMultp()
 	randomi = rand()%10;
 	//srand(time(NULL));
 	return randomi;
+}
+
+
+void Engine::CheckCollision(float obj1_x, float obj2_x, float obj1_y, float obj2_y)
+{
+	_obj1_x = obj1_x;
+	_obj2_x = obj2_x;
+	_obj1_y = obj1_y;
+	_obj2_y = obj2_y;
+
+	if(_obj2_x + 25  >= _obj1_x - 25 &&
+		_obj2_x - 25  <= _obj1_x + 25 &&
+		_obj2_y + 25  >= _obj1_y - 25 &&
+		_obj2_y - 25  <= _obj1_y + 25)
+	{
+		Quad2->rotate(10,glm::vec3(0,0,1));
+		linkcolor = glm::vec4(1,0,0,1);
+	}
+	else
+	{
+		linkcolor = glm::vec4(1,1,1,1);
+	}
+/* &&
+		_obj1_x - 20 < _obj2_x + 20 &&
+		_obj1_y + 20 > _obj2_y - 20 &&
+		_obj1_y - 20 < _obj2_y + 20*/
 }
