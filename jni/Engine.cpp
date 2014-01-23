@@ -22,6 +22,8 @@ Engine::Engine()
 	snowfade		= 0;
 	snowspawn		= 0;
 
+	isOctoDead = false;
+
 	//Make link texture
 	texture =	new Texture();
 	texture->loadTexture("Link2.tga");
@@ -104,6 +106,7 @@ void Engine::Update()
 		snowflakes.push_back(new Quad(24,24,0,randPosX(),700-(i*randomMultp()),0));
 		snowflakes[i]->setShader(shader);
 		snowflakes[i]->setTexture(texture_snow->texture);
+		snowflakes[i]->_speed = randomMultp();
 	}
 
 	for(int i = 0; i <= snowCount; i++)
@@ -124,8 +127,15 @@ void Engine::Update()
 	}
 
 	//Octo
-	Quad1->setPosition(sin(rotationangle/15)*100+600, cos(rotationangle/15)*100+400,0);
-	Quad1->rotate(rotationangle,0,0,1);
+	if(isOctoDead)
+	{
+
+	}
+	else
+	{
+		Quad1->setPosition(sin(rotationangle/15)*100+600, cos(rotationangle/15)*100+400,0);
+		Quad1->rotate(rotationangle,0,0,1);
+	}
 	//Link
 	//Quad2->setPosition(rotationangle,0,0);
 	//Ganon
@@ -282,13 +292,36 @@ void Engine::CheckCollision(float obj1_x, float obj2_x, float obj1_y, float obj2
 	_obj2_x = obj2_x;
 	_obj1_y = obj1_y;
 	_obj2_y = obj2_y;
-
+	
 	if(_obj2_x + 25  >= _obj1_x - 25 &&
 		_obj2_x - 25  <= _obj1_x + 25 &&
 		_obj2_y + 25  >= _obj1_y - 25 &&
 		_obj2_y - 25  <= _obj1_y + 25)
 	{
+		if(GetAsyncKeyState(VK_SPACE))
+		{
+			isOctoDead = true;
+			Quad1->move(1000,1000);
+		}
+		if(_obj2_x + 5  >= _obj1_x - 5)
+		{
+			Quad2->move(-2,0);
+		}
+		else if(_obj2_x + 5  <= _obj1_x - 5)
+		{
+			Quad2->move(2,0);
+		}
+		if(_obj2_y + 5  >= _obj1_y - 5)
+		{
+			Quad2->move(0,2);
+		}
+		else if(_obj2_y + 5  <= _obj1_y - 5)
+		{
+			Quad2->move(0,-2);
+		}
+
 		Quad2->rotate(10,glm::vec3(0,0,1));
+		//Quad2->move(100,0);
 		linkcolor = glm::vec4(1,0,0,1);
 	}
 	else

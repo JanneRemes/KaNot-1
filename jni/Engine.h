@@ -60,6 +60,7 @@ private:
 	float randomMultp();
 	float randomi;
 	int snowCount;
+	bool isOctoDead;
 
 	Camera*		camera;
 	Shader*		shader;
